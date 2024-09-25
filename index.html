@@ -20,35 +20,23 @@
       </nav>
       <section id="home" class="hero">
         <h1>Welcome to My Personal Website</h1>
-        <p>Hi, I'm [Your Name]. I'm a [Your Profession].</p>
+        <p>Hi, I'm Heather Yaple. I'm a software engineer.</p>
         <a href="#portfolio" class="btn-primary">View My Work</a>
       </section>
     </header>
   
     <!-- About Section -->
-    <section id="about">
-      <h2>About Me</h2>
-      <p>[Write a brief introduction about yourself, your background, and what you do.]</p>
-      <img src="path/to/your-photo.jpg" alt="Your Photo">
-    </section>
-  
-    <!-- Portfolio Section -->
-    <section id="portfolio">
-      <h2>My Portfolio</h2>
-      <div class="portfolio-item">
-        <img src="path/to/project1-thumbnail.jpg" alt="Project 1">
-        <h3>Project 1</h3>
-        <p>[Description of project 1]</p>
-        <a href="link-to-project1" class="btn-secondary">View Project</a>
-      </div>
-      <div class="portfolio-item">
-        <img src="path/to/project2-thumbnail.jpg" alt="Project 2">
-        <h3>Project 2</h3>
-        <p>[Description of project 2]</p>
-        <a href="link-to-project2" class="btn-secondary">View Project</a>
-      </div>
-      <!-- Add more portfolio items as needed -->
-    </section>
+<section id="about">
+  <h2>About Me</h2>
+  <p id="about-description"></p>
+  <img id="about-image" src="" alt="About Me">
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio">
+  <h2>My Portfolio</h2>
+  <div id="portfolio-items"></div>
+</section>
   
     <!-- Blog Section -->
     <section id="blog">
@@ -66,28 +54,86 @@
       <!-- Add more blog posts as needed -->
     </section>
   
-    <!-- Contact Section -->
-    <section id="contact">
-      <h2>Contact Me</h2>
-      <form action="your-form-handler-url" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <button type="submit" class="btn-primary">Send Message</button>
-      </form>
-    </section>
+    <!-- About Section -->
+<section id="about">
+  <h2>About Me</h2>
+  <p id="about-description"></p>
+  <img id="about-image" src="" alt="About Me">
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio">
+  <h2>My Portfolio</h2>
+  <div id="portfolio-items"></div>
+</section>
   
     <!-- Footer -->
     <footer>
-      <p>&copy; 2024 [Your Name]. All rights reserved.</p>
+      <p>&copy; 2024 Heather L Yaple. All rights reserved.</p>
       <ul>
-        <li><a href="https://www.linkedin.com/in/yourprofile">LinkedIn</a></li>
-        <li><a href="https://github.com/yourusername">GitHub</a></li>
-        <li><a href="mailto:your.email@example.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/heather-yaple-77a81731b">LinkedIn</a></li>
+        <li><a href="https://github.com/heather-yaple">GitHub</a></li>
+        <li><a href="mailto:heatherlyaple@gmail.com">Email</a></li>
       </ul>
     </footer>
+    <script>
+      // Fetch and display about information
+      async function fetchAboutInfo() {
+        const response = await fetch('http://localhost:5000/api/about');
+        const aboutData = await response.json();
+
+        const aboutDescriptionElement = document.getElementById('about-description');
+        aboutDescriptionElement.textContent = aboutData.description;
+
+        const aboutImageElement = document.getElementById('about-image');
+        aboutImageElement.src = aboutData.image;
+      }
+      
+      // Load Portfolio Items
+      async function loadPortfolioItems() {
+        const response = await fetch('http://localhost:5000/api/portfolio');
+        const items = await response.json();
+        const portfolioSection = document.getElementById('portfolio-items');
+        
+        items.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('portfolio-item');
+          div.innerHTML = `
+            <img src="${item.image}" alt="${item.title}">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            <a href="${item.link}" class="btn-secondary">View Project</a>
+          `;
+          portfolioSection.appendChild(div);
+        });
+      }
+      
+      // Handle Contact Form Submission
+      document.getElementById('contact-form').addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent default form submission
+      
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+      
+        await fetch('http://localhost:5000/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+      
+        alert('Message sent!'); // Provide feedback to the user
+      });
+      
+      // Load content when the page loads
+      window.onload = () => {
+        loadBlogPosts();
+        loadAboutInfo();
+        loadPortfolioItems();
+      };
+    
+    </script>
+    
   </body>
   </html>
