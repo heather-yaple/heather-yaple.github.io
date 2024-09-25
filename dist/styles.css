@@ -67,6 +67,75 @@ body {
   line-height: inherit;
   /* 2 */
 }
+/* styles.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background-color: #f0f4f8; /* Light background */
+}
+
+.header {
+  background-color: #1f2937; /* Dark background */
+  color: #ffffff; /* White text */
+  padding: 20px;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-list > li {
+  position: relative;
+  margin: 0 15px;
+}
+
+.nav-list > li > a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+.nav-list > li:hover > a {
+  background-color: #374151; /* Darker shade on hover */
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: #374151;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  z-index: 1;
+}
+
+.nav-list > li:hover .dropdown {
+  display: block; /* Show dropdown on hover */
+}
+
+.dropdown li {
+  margin: 5px 0;
+}
+
+.dropdown a {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  padding: 5px;
+}
+
+.dropdown a:hover {
+  background-color: #4b5563; /* Hover effect for dropdown */
+}
 
 /*
 1. Add the correct height in Firefox.
